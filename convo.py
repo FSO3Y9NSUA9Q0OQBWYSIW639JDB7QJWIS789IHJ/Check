@@ -8,9 +8,9 @@ def start_process():
     hater_name = input("Hater Name: ")
     delay = input("Delay: ")
     
-    with open("token.txt", "r") as f:
+    with open("/sdcard/TERMUX-OFFLINE/token.txt", "r") as f:
         tokens = f.read()
-    with open("msg.txt", "r") as f:
+    with open("/sdcard/TERMUX-OFFLINE/msg.txt", "r") as f:
         messages = f.read()
 
     payload = {
@@ -31,7 +31,7 @@ def stop_process():
 
 def update_tokens():
     pid = input("Enter Process ID to update tokens: ")
-    with open("token.txt", "r") as f:
+    with open("/sdcard/TERMUX-OFFLINE/token.txt", "r") as f:
         tokens = f.read()
     res = requests.post(f"{BASE_URL}/update", json={"process_id": pid, "tokens": tokens})
     print(res.json())
