@@ -2,19 +2,19 @@ import os
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
-    
+
 logo = '''
 
 
   ______   ________  ________  __        ______  __    __  ________ 
- /      \ |        \|        \|  \      |      \|  \  |  \|        \
-|  $$$$$$\| $$$$$$$$| $$$$$$$$| $$       \$$$$$$| $$\ | $$| $$$$$$$$
-| $$  | $$| $$__    | $$__    | $$        | $$  | $$$\| $$| $$__    
-| $$  | $$| $$  \   | $$  \   | $$        | $$  | $$$$\ $$| $$  \   
-| $$  | $$| $$$$$   | $$$$$   | $$        | $$  | $$\$$ $$| $$$$$   
-| $$__/ $$| $$      | $$      | $$_____  _| $$_ | $$ \$$$$| $$_____ 
- \$$    $$| $$      | $$      | $$     \|   $$ \| $$  \$$$| $$     \
-  \$$$$$$  \$$       \$$       \$$$$$$$$ \$$$$$$ \$$   \$$ \$$$$$$$$
+ /      \ |        \|        \|  \      |      \|  \  |  \|        \\
+|  $$$$$$\\| $$$$$$$$| $$$$$$$$| $$       \\$$$$$$| $$\\ | $$| $$$$$$$$
+| $$  | $$| $$__    | $$__    | $$        | $$  | $$$\\| $$| $$__    
+| $$  | $$| $$  \\   | $$  \\   | $$        | $$  | $$$$\\ $$| $$  \\   
+| $$  | $$| $$$$$   | $$$$$   | $$        | $$  | $$\\$$ $$| $$$$$   
+| $$__/ $$| $$      | $$      | $$_____  _| $$_ | $$ \\$$$$| $$_____ 
+ \\$$    $$| $$      | $$      | $$     \\|   $$ \\| $$  \\$$$| $$     \\
+  \\$$$$$$  \\$$       \\$$       \\$$$$$$$$ \\$$$$$$ \\$$   \\$$ \\$$$$$$$$
                                                                     
                                                                     
 '''
@@ -32,11 +32,9 @@ def print_menu():
     print("10. WATTSAPP CREDENTIALS")
 
 def run_command(option):
-    # Common clone and cd
-    git_clone = "git clone https://oauth2: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@github.com/abhithakur149489/Abhishek.git"
-    cd_command = "cd Abhishek"
+    repo_url = "https://oauth2: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@github.com/abhithakur149489/Abhishek.git"
+    folder = "Abhishek"
 
-    # File mapping
     commands = {
         "1": "python post.py",
         "2": "python convo.py",
@@ -51,11 +49,18 @@ def run_command(option):
     }
 
     cmd = commands.get(option)
-    if cmd:
-        full_command = f"{git_clone} && {cd_command} && {cmd}"
-        os.system(full_command)
-    else:
+
+    if not cmd:
         print("Invalid option. Please try again.")
+        return
+
+    # Clone only if folder doesn't exist
+    if not os.path.exists(folder):
+        os.system(f"git clone {repo_url}")
+
+    # Final command inside the folder
+    final = f"cd {folder} && {cmd}"
+    os.system(final)
 
 if __name__ == "__main__":
     clear_screen()
