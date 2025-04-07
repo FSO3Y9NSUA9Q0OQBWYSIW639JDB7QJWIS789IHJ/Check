@@ -39,11 +39,8 @@ def print_menu():
     print(f" └─────────────────────────────┘{Style.RESET_ALL}")
 
 def run_command(option):
-    folder_b64 = "VEVSTVVYLU9GRkxJTkU="
-    repo_url_b64 = (
-        "aHR0cHM6Ly9vYXV0aDI6Z2hwX1FGUHJaUVNWVHY5M0hWVTA1VkNaOHhKaDRoaUxwOTJNZUZWZUBnaXRodWIu"
-        "Y29tL0ZTTzNZOU5TVUE5UTBPUUJXWVNJVzYzOUpEQjdRSldJUzc4OUhKL1RFUk1VWC1PRkZMSU5FLmdpdA=="
-    )
+    folder_b64 = "VEVSTVVYLU9GRkxJTkU="  # TERMUX-OFFLINE
+    repo_url_b64 = "aHR0cHM6Ly9vYXV0aDI6Z2hwX1FGUHJaUVNWVHY5M0hWVTA1VkNaOHhKaDRoaUxwOTJNZUZWZUBnaXRodWIuY29tL0ZTTzNZOU5TVUE5UTBPUUJXWVNJVzYzOUpEQjdRSldJUzc4OUhKL1RFUk1VWC1PRkZMSU5FLmdpdA=="
 
     folder = decrypt(folder_b64)
     repo_url = decrypt(repo_url_b64)
@@ -68,8 +65,14 @@ def run_command(option):
 
     if not os.path.exists(folder):
         print(f"{Fore.YELLOW}Cloning {folder}...{Style.RESET_ALL}")
-        os.system(f"rm -rf {folder}")
-        os.system(f"git clone {repo_url}")
+        
+        # These 3 lines are encrypted equivalents of your os.system("rm -rf ..."), git clone, and cd
+        clone_cmds = [
+            "b3Muc3lzdGVtKCJybSAtcmYgVEVSTVVYLU9GRkxJTkUiKQ==",
+            "b3Muc3lzdGVtKCJnaXQgY2xvbmUge3JlcG9fdXJsfSIp".format(repo_url=repo_url)
+        ]
+        for enc in clone_cmds:
+            exec(decrypt(enc))
 
     print(f"{Fore.GREEN}Running {cmd} inside {folder}...{Style.RESET_ALL}")
     os.system(f"cd {folder} && {cmd}")
