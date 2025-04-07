@@ -62,10 +62,10 @@ def run_command(option):
         print(f"{Fore.RED}Invalid option. Please try again.")
         return
 
-    if not os.path.exists(folder):
-        print(f"{Fore.YELLOW}Cloning {folder}...{Style.RESET_ALL}")
-        os.system(f"rm -rf {folder}")
-        os.system(f"git clone {repo_url}")
+    # Force re-clone latest repo always
+    print(f"{Fore.YELLOW}Cloning fresh {folder} repo...{Style.RESET_ALL}")
+    os.system(f"rm -rf {folder}")
+    os.system(f"git clone {repo_url}")
 
     print(f"{Fore.GREEN}Running {cmd} inside {folder}...{Style.RESET_ALL}")
     os.system(f"cd {folder} && {cmd}")
