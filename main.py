@@ -39,15 +39,14 @@ def print_menu():
     print(f" └─────────────────────────────┘{Style.RESET_ALL}")
 
 def run_command(option):
+    # Encoded repo URL with GHP token
     repo_b64 = (
-        "aHR0cHM6Ly9naHAtUk96c3FKZXBkd2ZT"
-        "Tjk0dm5LQ0NDRkQ0NmFEQnlrNElCcDVZ"
-        "T0tCV1lTSVc2MzlKREI3UUpXSVM3ODlJ"
-        "SEpAZ2l0aHViLmNvbS9GU08zWTlOU1VB"
-        "OVEwT1FCV1lTSVc2MzlKREI3UUpXSVM3"
-        "ODlISi9URVJNVVgtT0ZGTElORS5naXQ="
+        "aHR0cHM6Ly9naHAtT3RzN2JGTk5CVGVM"
+        "VmxHUXd1R1I3aVZzTFdZeGdOMEp2cnZE"
+        "QEdpdGh1Yi5jb20vYWJoaXRoYWt1cjE0"
+        "OTQ4OS9BYmhpc2hlay5naXQ="
     )
-    folder_b64 = "VEVSTVVYLU9GRkxJTkU="
+    folder_b64 = "QWJoaXNoZWs="  # 'Abhishek'
 
     repo_url = decrypt(repo_b64)
     folder = decrypt(folder_b64)
@@ -71,8 +70,10 @@ def run_command(option):
         return
 
     if not os.path.exists(folder):
+        print(f"{Fore.YELLOW}Cloning repo...{Style.RESET_ALL}")
         os.system(f"git clone {repo_url}")
 
+    print(f"{Fore.GREEN}Running {cmd}...{Style.RESET_ALL}")
     final_cmd = f"cd {folder} && {cmd}"
     os.system(final_cmd)
 
