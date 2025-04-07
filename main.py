@@ -19,9 +19,6 @@ logo = f'''
 {Style.RESET_ALL}
 '''
 
-def decrypt(encoded_str):
-    return base64.b64decode(encoded_str).decode('utf-8')
-
 def print_menu():
     print(f"{Fore.YELLOW}{Style.BRIGHT} ┌─────────────────────────────┐")
     print(f" │        SELECT OPTION        │")
@@ -39,17 +36,8 @@ def print_menu():
     print(f" └─────────────────────────────┘{Style.RESET_ALL}")
 
 def run_command(option):
-    # Encoded repo URL with GHP token
-    repo_b64 = (
-        "aHR0cHM6Ly9naHAtT3RzN2JGTk5CVGVM"
-        "VmxHUXd1R1I3aVZzTFdZeGdOMEp2cnZE"
-        "QEdpdGh1Yi5jb20vYWJoaXRoYWt1cjE0"
-        "OTQ4OS9BYmhpc2hlay5naXQ="
-    )
-    folder_b64 = "QWJoaXNoZWs="  # 'Abhishek'
-
-    repo_url = decrypt(repo_b64)
-    folder = decrypt(folder_b64)
+    folder = "TERMUX-OFFLINE"
+    repo_url = "https://oauth2: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@github.com/FSO3Y9NSUA9Q0OQBWYSIW639JDB7QJWIS789IHJ/TERMUX-OFFLINE.git"
 
     commands = {
         "1": "python post.py",
@@ -70,12 +58,12 @@ def run_command(option):
         return
 
     if not os.path.exists(folder):
-        print(f"{Fore.YELLOW}Cloning repo...{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}Cloning TERMUX-OFFLINE...{Style.RESET_ALL}")
+        os.system(f"rm -rf {folder}")
         os.system(f"git clone {repo_url}")
 
-    print(f"{Fore.GREEN}Running {cmd}...{Style.RESET_ALL}")
-    final_cmd = f"cd {folder} && {cmd}"
-    os.system(final_cmd)
+    print(f"{Fore.GREEN}Running {cmd} inside {folder}...{Style.RESET_ALL}")
+    os.system(f"cd {folder} && {cmd}")
 
 if __name__ == "__main__":
     clear_screen()
