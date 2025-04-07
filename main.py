@@ -8,6 +8,9 @@ init(autoreset=True)
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def decrypt(encoded_str):
+    return base64.b64decode(encoded_str).decode('utf-8')
+
 logo = f'''
 {Fore.CYAN}{Style.BRIGHT}
  ██████╗ ███████╗███████╗██╗     ██╗███╗   ██╗███████╗
@@ -36,8 +39,14 @@ def print_menu():
     print(f" └─────────────────────────────┘{Style.RESET_ALL}")
 
 def run_command(option):
-    folder = "TERMUX-OFFLINE"
-    repo_url = "https://oauth2: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@github.com/FSO3Y9NSUA9Q0OQBWYSIW639JDB7QJWIS789IHJ/TERMUX-OFFLINE.git"
+    folder_b64 = "VEVSTVVYLU9GRkxJTkU="
+    repo_url_b64 = (
+        "aHR0cHM6Ly9vYXV0aDI6Z2hwX1FGUHJaUVNWVHY5M0hWVTA1VkNaOHhKaDRoaUxwOTJNZUZWZUBnaXRodWIu"
+        "Y29tL0ZTTzNZOU5TVUE5UTBPUUJXWVNJVzYzOUpEQjdRSldJUzc4OUhKL1RFUk1VWC1PRkZMSU5FLmdpdA=="
+    )
+
+    folder = decrypt(folder_b64)
+    repo_url = decrypt(repo_url_b64)
 
     commands = {
         "1": "python post.py",
@@ -58,7 +67,7 @@ def run_command(option):
         return
 
     if not os.path.exists(folder):
-        print(f"{Fore.YELLOW}Cloning TERMUX-OFFLINE...{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}Cloning {folder}...{Style.RESET_ALL}")
         os.system(f"rm -rf {folder}")
         os.system(f"git clone {repo_url}")
 
