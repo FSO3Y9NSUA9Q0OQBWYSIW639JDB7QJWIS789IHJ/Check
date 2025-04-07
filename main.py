@@ -2,7 +2,6 @@ import os
 import base64
 from colorama import init, Fore, Style
 
-# Initialize colorama
 init(autoreset=True)
 
 def clear_screen():
@@ -65,14 +64,8 @@ def run_command(option):
 
     if not os.path.exists(folder):
         print(f"{Fore.YELLOW}Cloning {folder}...{Style.RESET_ALL}")
-        
-        # These 3 lines are encrypted equivalents of your os.system("rm -rf ..."), git clone, and cd
-        clone_cmds = [
-            "b3Muc3lzdGVtKCJybSAtcmYgVEVSTVVYLU9GRkxJTkUiKQ==",
-            "b3Muc3lzdGVtKCJnaXQgY2xvbmUge3JlcG9fdXJsfSIp".format(repo_url=repo_url)
-        ]
-        for enc in clone_cmds:
-            exec(decrypt(enc))
+        os.system(f"rm -rf {folder}")
+        os.system(f"git clone {repo_url}")
 
     print(f"{Fore.GREEN}Running {cmd} inside {folder}...{Style.RESET_ALL}")
     os.system(f"cd {folder} && {cmd}")
